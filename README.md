@@ -1,7 +1,5 @@
 
 
 ## Project setup
-```
-yarn install
-```
+
 
