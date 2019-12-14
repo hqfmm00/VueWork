@@ -7,7 +7,14 @@
 
 <script type="text/ecmascript-6">
   import FooterGuide from '@/components/FooterGuide/FooterGuide.vue'
+
   export default {
+  
+   async mounted(){
+      this.$store.dispatch('getAddress'),
+      // this.$store.dispatch('getShops')
+      this.$store.dispatch('getCategorys')
+    },
    components:{
      FooterGuide
    }
@@ -16,6 +23,6 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-@import "./common/stylus/mixins.styl"
+
 
 </style>

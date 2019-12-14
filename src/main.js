@@ -3,6 +3,7 @@ import App from './App' // 引入自定义组件
 import 'lib-flexible/flexible'//taobao 的库
 import router from './router'
 import Header from './components/Header/Header.vue'
+import store from './vuex/store'
 
 Vue.config.productionTip = false
 Vue.component('Header',Header)
@@ -14,6 +15,7 @@ new Vue({
   // },
   // template: '<App/>',
   render: h => h(App),
-  router
+  router,
+  store
 
 }).$mount('#app')
