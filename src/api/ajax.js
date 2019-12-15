@@ -9,6 +9,7 @@
 
 import axios from 'axios'
 import qs from 'qs'
+import {Indicator} from 'mint-ui'
 
 const instance = axios.create({
   baseURL:'/api',
@@ -16,6 +17,7 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use((config)=>{
+  Indicator.open()
   //输入函数体
   // 3. 对请求体参数进行urlencode处理, 而不使用默认的json方式(后台接口不支持)
 const data = config.data 
@@ -27,10 +29,12 @@ if(data instanceof Object){
 
 instance.interceptors.response.use(
   response => {
+    Indicator.close()
     // 2. 异步请求成功的数据不是response, 而是response.data
     return response.data
   },
   error => {
+    Indicator.close()
     // 统一处理请求异常
     return new Promise(()=>{})
   }
