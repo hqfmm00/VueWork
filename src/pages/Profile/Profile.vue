@@ -43,7 +43,7 @@
               <i class="iconfont icon-order-s"></i>
             </span>
             <div class="my_order_div">
-              <span>我的订单</span>
+              <span>{{$t('profile_own_order')}}</span>
               <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
               </span>
@@ -55,7 +55,7 @@
               <i class="iconfont icon-jifen"></i>
             </span>
             <div class="my_order_div">
-              <span>积分商城</span>
+              <span>{{$t('profile_points_mall')}}</span>
               <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
               </span>
@@ -67,7 +67,7 @@
               <i class="iconfont icon-vip"></i>
             </span>
             <div class="my_order_div">
-              <span>硅谷外卖会员卡</span>
+              <span>{{$t('profile_VIP')}}</span>
               <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
               </span>
@@ -81,7 +81,7 @@
               <i class="iconfont icon-fuwu"></i>
             </span>
             <div class="my_order_div">
-              <span>服务中心</span>
+              <span>{{$t('profile_serve')}}</span>
               <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
               </span>

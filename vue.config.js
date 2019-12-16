@@ -6,7 +6,9 @@ const postcss = px2rem({
 })
 module.exports = {
   // runtimeCompiler: true,//可以解析模板
-  lintOnSave: false, // 关闭EsLint的规则
+  // 关闭EsLint的规则
+  lintOnSave: false,
+
   css: { // 添加postcss配置
     loaderOptions: {
       postcss: {
@@ -16,6 +18,7 @@ module.exports = {
       }
     }
   },
+
   configureWebpack:{
     resolve: {
       extensions: ['.js', '.vue', '.json'], // 可以省略的后缀名
@@ -26,6 +29,7 @@ module.exports = {
       }
     }
   },
+
   devServer: {
     proxy: {
       // 处理以/api开头路径的请求
@@ -47,4 +51,13 @@ module.exports = {
     },
     historyApiFallback: true,
   },
+
+  pluginOptions: {
+    i18n: {
+      locale: 'zh_CN',
+      fallbackLocale: 'en',
+      localeDir: 'locales',
+      enableInSFC: false
+    }
+  }
 }

@@ -4,6 +4,7 @@ import 'lib-flexible/flexible'//taobao 的库
 import router from './router'
 import Header from './components/Header/Header.vue'
 import store from './vuex/store'
+import i18n from './i18n'
 
 Vue.config.productionTip = false
 Vue.component('Header',Header)
@@ -15,7 +16,8 @@ new Vue({
   // },
   // template: '<App/>',
   render: h => h(App),
-  router,
-  store
 
+  router,
+  i18n,
+  store
 }).$mount('#app')

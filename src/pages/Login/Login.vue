@@ -41,9 +41,11 @@
                 </section>
               </section>
             </div>
-            <button class="login_submit">登录</button>
+            <button class="login_submit">{{$t('login_login')}}</button>
           </form>
-          <a href="javascript:;" class="about_us">关于我们</a>
+          <a href="javascript:;" class="about_us">{{$t('login_aboutUs')}}</a>
+          <br>
+        <button class="login_submit" @click.prevent="toggleLocale">切换语言</button>
         </div>
         <a href="javascript:" class="go_back" @click="$router.back()">
           <i class="iconfont icon-jiantou2"></i>
@@ -72,8 +74,17 @@
     methods: {
       sendCode(){
         alert('------')
+      },
+      toggleLocale () {
+        // 根据当前的locale确定新的locale
+        const locale = this.$i18n.locale === 'en' ? 'zh_CN' : 'en'
+        // 指定新的locale
+        this.$i18n.locale = locale
+        // 保存新的locale
+        localStorage.setItem('locale_key', locale)
       }
     },
+    
   }
 </script>
 
