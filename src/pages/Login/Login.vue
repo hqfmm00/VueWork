@@ -11,12 +11,18 @@
         <div class="login_content">
           <form>
             <div :class="{on:isShowSms}">
+
               <section class="login_message">
-                <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
+                <input type="tel" maxlength="11" placeholder="手机号" 
+                v-model="phone" name="phone" v-validate="'required|mobile'">
+
                 <button :disabled=!isRightPhone class="get_verification" :class="{is_right_num:isRightPhone}" @click.prevent="sendCode">获取验证码</button>
+              <span style="color: red;" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
               </section>
               <section class="login_verification">
-                <input type="tel" maxlength="8" placeholder="验证码">
+                <input type="text" maxlength="8" placeholder="验证码"
+                v-model="code" name="code" v-validate="{required: true,regex: /^\d{6}$/}">
+              <span style="color: red;" v-show="errors.has('code')">{{ errors.first('code') }}</span>
               </section>
               <section class="login_hint">
                 温馨提示：未注册硅谷外卖帐号的手机号，登录时将自动注册，且代表已同意
@@ -26,18 +32,26 @@
             <div :class="{on:!isShowSms}">
               <section>
                 <section class="login_message">
-                  <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名" >
+                  <input type="text" placeholder="用户名"
+                  v-model="name" name="name" v-validate="'required'">
+                <span style="color: red;" v-show="errors.has('name')">{{ errors.first('name') }}</span>
                 </section>
                 <section class="login_verification">
-                  <input :type="isShowPsw?'text':'password'" maxlength="8" placeholder="密码">
+                  <input :type="isShowPsw?'text':'password'" maxlength="8" placeholder="密码"
+                  v-model="pwd" name="pwd" v-validate="'required'">
+                  
                   <div class="switch_button" :class="isShowPsw?'on':'off'" @click="isShowPsw=!isShowPsw">
                     <div class="switch_circle" :class="{right:isShowPsw}"></div>
                     <span class="switch_text">{{isShowPsw?'abc':''}}</span>
                   </div>
+                  <span style="color: red;" v-show="errors.has('pwd')">{{ errors.first('pwd') }}</span>
                 </section>
                 <section class="login_message">
-                  <input type="text" maxlength="11" placeholder="验证码" >
+                  <input type="text" maxlength="11" placeholder="验证码" 
+                  v-model="captcha" name="captcha" v-validate="{required: true,regex: /^[0-9a-zA-Z]{4}$/}"
+                  >
                   <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                   <span style="color: red;" v-show="errors.has('captcha')">{{ errors.first('captcha') }}</span>
                 </section>
               </section>
             </div>
@@ -56,6 +70,7 @@
 
 <script type="text/ecmascript-6">
   export default {
+     name: 'Login',
     data() {
       return {
         phone:'',
@@ -82,10 +97,21 @@
         this.$i18n.locale = locale
         // 保存新的locale
         localStorage.setItem('locale_key', locale)
-      }
-    },
-    
+      },
+
+      async login () {
+        // 进行前台表单验证
+        let names
+        if (this.isShowSms) {
+          names = ['phone', 'code']
+        } else {
+          names = ['name', 'pwd', 'captcha']
+        }
+        const success = await this.$validator.validateAll(names)
+    }
   }
+  }
+
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">

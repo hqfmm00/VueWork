@@ -5,7 +5,7 @@ import router from './router'
 import Header from './components/Header/Header.vue'
 import store from './vuex/store'
 import i18n from './i18n'
-
+import './validate'
 Vue.config.productionTip = false
 Vue.component('Header',Header)
 
