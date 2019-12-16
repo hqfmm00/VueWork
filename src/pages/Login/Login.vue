@@ -16,7 +16,13 @@
                 <input type="tel" maxlength="11" placeholder="手机号" 
                 v-model="phone" name="phone" v-validate="'required|mobile'">
 
-                <button :disabled=!isRightPhone class="get_verification" :class="{is_right_num:isRightPhone}" @click.prevent="sendCode">获取验证码</button>
+                <button 
+                :disabled="!isRightPhone||computeTime>0"
+                class="get_verification" 
+                :class="{is_right_num:isRightPhone}"
+                @click.prevent="sendCode">
+                {{computeTime>0?`短信已发送(${computeTime}s)`:'发送验证码'}}
+                </button>
               <span style="color: red;" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
               </section>
               <section class="login_verification">
@@ -50,7 +56,11 @@
                   <input type="text" maxlength="11" placeholder="验证码" 
                   v-model="captcha" name="captcha" v-validate="{required: true,regex: /^[0-9a-zA-Z]{4}$/}"
                   >
-                  <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                  <img class="get_verification" 
+                  src="http://localhost:4000/captcha" 
+                  alt="captcha"
+                  @click="updateCaptcha"
+                  ref="captcha">
                    <span style="color: red;" v-show="errors.has('captcha')">{{ errors.first('captcha') }}</span>
                 </section>
               </section>
@@ -69,13 +79,20 @@
 </template>
 
 <script type="text/ecmascript-6">
+const util = require('./utils')
   export default {
      name: 'Login',
     data() {
       return {
-        phone:'',
-        isShowSms:true,
-        isShowPsw:false
+        phone: '', // 手机号
+        code: '', // 短信验证码
+        name: '', // 用户名
+        pwd: '', // 密码
+        captcha: '', // 图形验证码
+        isShowSms:false,
+        isShowPsw:false,
+        computeTime:0,
+         
       }
     },
     computed: {
@@ -88,7 +105,14 @@
     },
     methods: {
       sendCode(){
-        alert('------')
+        this.computeTime=10
+        const timer=setInterval(() => {
+          this.computeTime--
+          if (this.computeTime===0) {
+            clearInterval(timer)
+          }
+        }, 1000);
+
       },
       toggleLocale () {
         // 根据当前的locale确定新的locale
@@ -108,7 +132,18 @@
           names = ['name', 'pwd', 'captcha']
         }
         const success = await this.$validator.validateAll(names)
-    }
+    },
+
+    // updateCaptcha(){
+    //  this.$refs.captcha.src="http://localhost:4000/captcha?time="+ Date.now()
+    // },
+      
+      //利用函数节流解决连续多次点击图片验证码
+      updateCaptcha: util.throttle(function () {
+      this.$refs.captcha.src="http://localhost:4000/captcha?time="+ Date.now()
+    })
+　　
+   
   }
   }
 
