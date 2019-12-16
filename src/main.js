@@ -7,6 +7,9 @@ import Star from './components/Star/Star.vue'
 import store from './vuex/store'
 import i18n from './i18n'
 import './validate'
+import * as API from '@/api'
+
+Vue.prototype.$API = API
 Vue.config.productionTip = false
 Vue.component('Header',Header)
 Vue.component('Star',Star)

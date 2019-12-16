@@ -80,6 +80,7 @@
 
 <script type="text/ecmascript-6">
 const util = require('./utils')
+import { Toast, MessageBox } from 'mint-ui'
   export default {
      name: 'Login',
     data() {
@@ -89,7 +90,7 @@ const util = require('./utils')
         name: '', // 用户名
         pwd: '', // 密码
         captcha: '', // 图形验证码
-        isShowSms:false,
+        isShowSms:true,
         isShowPsw:false,
         computeTime:0,
          
@@ -104,7 +105,7 @@ const util = require('./utils')
       } 
     },
     methods: {
-      sendCode(){
+     async sendCode(){
         this.computeTime=10
         const timer=setInterval(() => {
           this.computeTime--
@@ -112,6 +113,14 @@ const util = require('./utils')
             clearInterval(timer)
           }
         }, 1000);
+
+        const result = await this.$API.reqSendCode(this.phone)
+        if (result.code===0) {
+          Toast('验证码已发送')
+        }else{
+          this.computeTime=0
+          MessageBox('提示',result.msg || '验证码发送失败')
+        }
 
       },
       toggleLocale () {
@@ -141,9 +150,7 @@ const util = require('./utils')
       //利用函数节流解决连续多次点击图片验证码
       updateCaptcha: util.throttle(function () {
       this.$refs.captcha.src="http://localhost:4000/captcha?time="+ Date.now()
-    })
-　　
-   
+    },2000)
   }
   }
 
