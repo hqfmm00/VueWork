@@ -123,15 +123,6 @@ import { Toast, MessageBox } from 'mint-ui'
         }
 
       },
-      toggleLocale () {
-        // 根据当前的locale确定新的locale
-        const locale = this.$i18n.locale === 'en' ? 'zh_CN' : 'en'
-        // 指定新的locale
-        this.$i18n.locale = locale
-        // 保存新的locale
-        localStorage.setItem('locale_key', locale)
-      },
-
       async login () {
         // 进行前台表单验证
         let names
@@ -150,9 +141,18 @@ import { Toast, MessageBox } from 'mint-ui'
       //利用函数节流解决连续多次点击图片验证码
       updateCaptcha: util.throttle(function () {
       this.$refs.captcha.src="http://localhost:4000/captcha?time="+ Date.now()
-    },2000)
+    },2000),
+
+    toggleLocale () {
+        // 根据当前的locale确定新的locale
+        const locale = this.$i18n.locale === 'en' ? 'zh_CN' : 'en'
+        // 指定新的locale
+        this.$i18n.locale = locale
+        // 保存新的locale
+        localStorage.setItem('locale_key', locale)
+      },
   }
-  }
+}
 
 </script>
 
