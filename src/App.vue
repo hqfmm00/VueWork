@@ -14,6 +14,7 @@
       this.$store.dispatch('getAddress')
       // this.$store.dispatch('getShops')
       // this.$store.dispatch('getCategorys')
+      this.$store.dispatch('autoLogin')
     },
    components:{
      FooterGuide

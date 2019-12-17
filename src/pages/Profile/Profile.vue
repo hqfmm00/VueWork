@@ -1,18 +1,18 @@
 <template>
   <section class="profile">
         <Header title="个 人"></Header>
-        <section class="profile-number" @click="$router.push('/login')">
+        <section class="profile-number" @click="$router.push(user._id?'/userInfo':'/login')">
           <a href="javascript:" class="profile-link">
             <div class="profile_image">
               <i class="iconfont icon-person"></i>
             </div>
             <div class="user-info">
-              <p class="user-info-top">登录/注册</p>
-              <p>
+              <p class="user-info-top" v-if="!user.phone">{{user.name?user.name:"登录/注册"}}</p>
+              <p v-if="!user.name">
                 <span class="user-icon">
                   <i class="iconfont icon-shouji icon-mobile"></i>
                 </span>
-                <span class="icon-mobile-number">暂无绑定手机号</span>
+                <span class="icon-mobile-number">{{user.phone?user.phone:"暂无绑定手机号"}}</span>
               </p>
             </div>
             <span class="arrow">
@@ -88,12 +88,36 @@
             </div>
           </a>
         </section>
+        <mt-button type='danger' style="width:100%" v-show="user._id" @click="logout">退出登录</mt-button>
       </section>
     
 </template>
 
 <script type="text/ecmascript-6">
+  import {mapState} from 'vuex'
+  import {MessageBox} from 'mint-ui'
   export default {
+    computed: {
+      // 直接当做普通属性调用不加括号
+      // 任何data中数据变化立即重新计算
+      // 计算属性会缓存
+      
+      ...mapState(['user'])
+    },
+    methods: {
+      logout(){
+        MessageBox.confirm('确认要退出登录?').then(
+          ()=>{
+            //输入函数体,
+            this.$store.dispatch('logOut')
+          },
+          ()=>{
+            //输入函数体
+            console.log('冲鸭骚年!!')
+          }
+        )
+      }
+    },
   }
 </script>
 

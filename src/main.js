@@ -7,12 +7,14 @@ import Star from './components/Star/Star.vue'
 import store from './vuex/store'
 import i18n from './i18n'
 import './validate'
+import {Button} from 'mint-ui'
 import * as API from '@/api'
 
 Vue.prototype.$API = API
 Vue.config.productionTip = false
 Vue.component('Header',Header)
 Vue.component('Star',Star)
+Vue.component(Button.name,Button)
 
 new Vue({
   // 注册局部组件
