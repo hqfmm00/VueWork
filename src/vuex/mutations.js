@@ -5,7 +5,10 @@ import {
   RECEIVE_USER,
   RECEIVE_TOKEN,
   RESET_USER,
-  RESET_TOKEN
+  RESET_TOKEN,
+  RECEIVE_GOODS,
+  RECEIVE_RATINGS,
+  RECEIVE_INFO,
 } from './mutations-types'
 
 export default {
@@ -29,5 +32,15 @@ export default {
   },
   [RESET_TOKEN](state){
     state.token=''
-  }
+  },
+  [RECEIVE_GOODS](state,{goods}){
+               //等号右边不能加引号 加引号就变成了字符串
+    state.goods=goods
+  },
+  [RECEIVE_RATINGS](state,{ratings}){
+    state.ratings=ratings
+  },
+  [RECEIVE_INFO](state,{info}){
+    state.info=info
+  },
 }

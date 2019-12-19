@@ -6,4 +6,7 @@ export default {
   shops:[],
   user:{},
   token: localStorage.getItem('token_key') || '',
+  goods:[],
+  reatings:[],
+  info:{}
 }

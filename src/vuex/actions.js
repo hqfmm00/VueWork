@@ -2,7 +2,10 @@ import {
   reqAddress,
   reqCategorys,
   reqShops,
-  reqAutoLogin
+  reqAutoLogin,
+  reqShopGoods,
+  reqShopRatings,
+  reqShopInfo
 } from '@/api'
 
 import {
@@ -12,7 +15,10 @@ import {
   RECEIVE_USER,
   RECEIVE_TOKEN,
   RESET_USER,
-  RESET_TOKEN
+  RESET_TOKEN,
+  RECEIVE_GOODS,
+  RECEIVE_RATINGS,
+  RECEIVE_INFO,
 } from './mutations-types'
 
 export default {
@@ -66,6 +72,39 @@ export default {
     localStorage.removeItem('token_key')
     commit(RESET_USER)
     commit(RESET_TOKEN)
+  },
+
+  async getShopGoods({commit},cb){
+                       // 在actions里发送请求的时候 一定要记得调用()
+    const result = await reqShopGoods()
+    console.log(result)
+    if (result.code===0) {
+      //data 返回的 就直接是goods的内容 没有包在对象里 不用解构赋值
+      const goods =result.data
+      commit(RECEIVE_GOODS,{goods})
+      typeof cb==='function'&& cb()
+    } 
+  },
+
+  async getShopRatings ({commit},cb){
+    const result = await reqShopRatings()
+    console.log(result)
+    if (result.code===0) {
+      const ratings = result.data
+          //mutation的名字不能加引号 因为用的是变量名里面的值
+      commit(RECEIVE_RATINGS,{ratings})
+      typeof cb==='function'&& cb()
+    }
+  },
+
+  async getShopInfo({commit},cb){
+    const result = await reqShopInfo()
+    console.log(result)
+    if (result.code===0) {
+      const info = result.data
+      commit(RECEIVE_INFO,{info})
+      typeof cb ==='function'&& cb()
+    }
   }
 
 }

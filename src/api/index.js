@@ -25,3 +25,12 @@ export const reqPwdLogin = ({name,pwd,captcha}) =>ajax.post('/login_pwd',{name,p
 //6.手机验证码登录
 export const reqSmsLogin = ({phone,code}) =>ajax.post('/login_sms',{phone,code})
 export const reqAutoLogin = () =>ajax.get('/auto_login')
+
+//用ajax发送请求 成功返回的是result 而不是 response
+// ajax('/info').then((result)=>{
+//   //输入函数体
+//   console.log(result.data)
+// })
+export const reqShopGoods = () =>ajax.get('/goods')
+export const reqShopRatings = () =>ajax.get('/ratings')
+export const reqShopInfo = () =>ajax.get('/info')

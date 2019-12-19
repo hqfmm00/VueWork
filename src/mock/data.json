@@ -2,8 +2,8 @@
   "info": {
     "name": "嘉禾一品（温都水城）",
     "description": "硅谷专送",
-    "deliveryTime": 28,
-    "score|0-4.1": 4.2,
+    "deliveryTime|15-30": 28,
+    "score": 4.2,
     "serviceScore": 4.1,
     "foodScore": 4.3,
     "rankRate": 69.2,
@@ -17,7 +17,7 @@
       {
         "type": 0,
         "name": "首单",
-        "content": "新用户下单立减17元(不与其它活动同享)"
+        "content": "新用户下单立减17元(不与其它活动同享冲鸭!)"
       },
       {
         "type": 1,

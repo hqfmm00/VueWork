@@ -22,8 +22,13 @@ import ShopHeader from '@/components/ShopHeader/ShopHeader'
   export default {
     components:{
       ShopHeader
-    }
+    }, 
+    mounted(){
+      this.$store.dispatch('getShopGoods')
+      this.$store.dispatch('getShopRatings')
+      this.$store.dispatch('getShopInfo')
   }
+}
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
