@@ -3,7 +3,7 @@
   <div class="goods">
     <div class="menu-wrapper" ref="left">
       <ul>
-        <li class="menu-item" v-for="(good, index) in goods" :key="good.name">
+        <li class="menu-item" v-for="(good, index) in goods" :key="good.name" :class="{current:index===currentIndex}">
           <span class="text bottom-border-1px">
                               <!-- 这里是good.icon 不是 goods 是单个遍历出的元素 -->
             <img class="icon" :src="good.icon" v-if="good.icon">
@@ -13,7 +13,7 @@
        </ul>
     </div>
     <div class="foods-wrapper" ref="right">
-      <ul>
+      <ul ref="rightUl">
         <li class="food-list-hook" v-for="(good, index) in goods" :key="index">
           <h1 class="title">{{good.name}}</h1>
           <ul>
@@ -50,15 +50,44 @@
 import {mapState} from 'vuex'
 import BSroll from 'better-scroll'
   export default {
+    data() {
+      return {
+        scrollY:0,
+        tops:[]
+      }
+    },
     computed: {
-      ...mapState(['goods'])
+      ...mapState(['goods']),
+      currentIndex(){
+        const {tops,scrollY}=this
+        return tops.findIndex((top,index)=>scrollY>=top && scrollY<tops[index+1]
+        )
+      }
+    },
+    methods: {
+      initScroll(){
+        new BSroll(this.$refs.left,{}),
+        new BSroll(this.$refs.right,{})
+      },
+      initTops(){
+        const tops=[]
+        let top = 0
+        tops.push(top)
+        const lis=Array.from(this.$refs.rightUl.children)
+        lis.forEach(li => {
+          top+=li.clientHeight
+          tops.push(top)
+        });
+        this.tops=tops
+      }
     },
     watch: {
       goods(){
         this.$nextTick(
          ()=>{
-            new BSroll(this.$refs.left,{}),
-            new BSroll(this.$refs.right,{})
+           //在列表数据回来后new滚动和形成good长度数组
+            this.initScroll()
+            this.initTops()
          }
         )
       }
